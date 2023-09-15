@@ -29,11 +29,15 @@ export const reducer = (state, action) => {
       const newCartAfterDecrease = new Map(state.cart);
       const id = action.payload.id;
       const targetToDecrease = newCartAfterDecrease.get(id);
-      const newTargetToDecrease = {
-        ...targetToDecrease,
-        amount: targetToDecrease.amount > 0 ? targetToDecrease.amount - 1 : 0,
-      };
-      newCartAfterDecrease.set(id, newTargetToDecrease);
+      if (targetToDecrease.amount === 1) {
+        newCartAfterDecrease.delete(id);
+      } else {
+        const newTargetToDecrease = {
+          ...targetToDecrease,
+          amount: targetToDecrease.amount > 0 ? targetToDecrease.amount - 1 : 0,
+        };
+        newCartAfterDecrease.set(id, newTargetToDecrease);
+      }
       return { ...state, cart: newCartAfterDecrease };
 
     default:
