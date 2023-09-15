@@ -41,7 +41,7 @@ const itemsMap = new Map(items.map((item) => [item.id, item]));
 // console.log(itemsMap);
 // i. CONVERTING FROM MAP TO ARRAY
 const itemsArray = Array.from(itemsMap.entries());
-console.log(itemsArray.map((item) => item[1]));
+const itemsArr = itemsArray.map((item) => item[1]);
 
 // **********************************************
 
@@ -53,8 +53,18 @@ const initialState = {
 function AppContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // a. CLEAR CART
+  const clearCart = () => {
+    dispatch({ type: CLEAR_CART });
+  };
+
+  // b. REMOVE ITEM
+  
+
   return (
-    <AppContext.Provider value={{ ...state }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ ...state, clearCart }}>
+      {children}
+    </AppContext.Provider>
   );
 }
 
