@@ -41,6 +41,16 @@ export const reducer = (state, action) => {
       }
       return { ...state, cart: newCartAfterDecrease };
 
+    case LOADING:
+      return { ...state, loading: true };
+
+    case DISPLAY_ITEMS:
+      return {
+        ...state,
+        loading: false,
+        cart: new Map(action.payload.cart.map((item) => [item.id, item])),
+      };
+
     default:
       throw new Error(`no matching action type ${action.type}`);
   }

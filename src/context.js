@@ -51,6 +51,8 @@ const initialState = {
   cart: new Map(cartItems.map((item) => [item.id, item])),
 };
 
+const url = 'https://www.course-api.com/react-useReducer-cart-project';
+
 function AppContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { totalAmount, totalCost } = getTotal(state.cart);
@@ -74,6 +76,17 @@ function AppContextProvider({ children }) {
   const decrease = (id) => {
     dispatch({ type: DECREASE, payload: { id } });
   };
+
+  const fetchData = async () => {
+    dispatch({ type: LOADING });
+    const response = await fetch(url);
+    const cart = await response.json();
+    dispatch({ type: DISPLAY_ITEMS, payload: { cart } });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <AppContext.Provider
