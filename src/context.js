@@ -63,8 +63,20 @@ function AppContextProvider({ children }) {
     dispatch({ type: REMOVE, payload: { id } });
   };
 
+  // c. INCREASE ITEM
+  const increase = (id) => {
+    dispatch({ type: INCREASE, payload: { id } });
+  };
+
+  // d. DECREASE ITEM
+  const decrease = (id) => {
+    dispatch({ type: DECREASE, payload: { id } });
+  };
+
   return (
-    <AppContext.Provider value={{ ...state, clearCart, remove }}>
+    <AppContext.Provider
+      value={{ ...state, clearCart, remove, increase, decrease }}
+    >
       {children}
     </AppContext.Provider>
   );
