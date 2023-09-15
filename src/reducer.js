@@ -29,12 +29,13 @@ export const reducer = (state, action) => {
       const newCartAfterDecrease = new Map(state.cart);
       const id = action.payload.id;
       const targetToDecrease = newCartAfterDecrease.get(id);
+      // If item qty is 1, then we just remove the item entirely when decreasing
       if (targetToDecrease.amount === 1) {
         newCartAfterDecrease.delete(id);
       } else {
         const newTargetToDecrease = {
           ...targetToDecrease,
-          amount: targetToDecrease.amount > 0 ? targetToDecrease.amount - 1 : 0,
+          amount: targetToDecrease.amount - 1,
         };
         newCartAfterDecrease.set(id, newTargetToDecrease);
       }
